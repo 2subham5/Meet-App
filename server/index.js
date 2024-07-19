@@ -7,19 +7,29 @@ const {Server} = require('socket.io');
 // });
 
 const { createServer } = require('http');
+const app = express();
 
-const httpServer = createServer();
-const io = new Server(httpServer, {
+// CORS configuration
+const allowedOrigins = ['https://meet-app-delta.vercel.app', 'https://meet-backend-lime.vercel.app'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Create Socket.io server
+const io = new Server(server, {
   cors: {
-    origin: ['https://meet-app-delta.vercel.app',
-    'https://another-allowed-origin.com' 
-    ],  // Your frontend URL
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
     credentials: true
   }
 });
-const app = express();
+
 
 app.use(bodyParser.json());
 // to map a particular mail to socketId
