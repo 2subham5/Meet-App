@@ -7,7 +7,7 @@ export const useSocket = ()=>{
 };
 export const SocketProvider = (props)=>{
     const socket = useMemo(()=>
-        io ('https://vercel.com/2subham5s-projects/meet-backend/G9a33FzDGXhdibDRLJwpbvYpu68m'),
+        io ('https://meet-backend-lime.vercel.app/'),
     [])
     return (
         <SocketContext.Provider value={{socket}}>

@@ -2,25 +2,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {Server} = require('socket.io');
 
-const io = new Server({
-    cors: true,
+// const io = new Server({
+//     cors: true,
+// });
+
+const { createServer } = require('http');
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'https://meet-app-delta.vercel.app',  // Your frontend URL
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true
+  }
 });
 const app = express();
-// const allowedOrigins = ['https://b-bbackend.vercel.app', 'https://meet-app-delta.vercel.app/','http://localhost:5173'];
 
-//   app.use(cors({
-//     origin: function (origin, callback) {
-//       if (!origin) return callback(null, true); // Allow non-browser requests
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-//         return callback(new Error(msg), false);
-//       }
-//       return callback(null, true);
-//     },
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     allowedHeaders: 'Authorization,Content-Type',
-//     credentials: true, // Allow cookies and authorization headers
-//   }));
 app.use(bodyParser.json());
 // to map a particular mail to socketId
 const emailToSocketMapping = new Map();
