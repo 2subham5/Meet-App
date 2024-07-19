@@ -11,7 +11,9 @@ const { createServer } = require('http');
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://meet-app-delta.vercel.app',  // Your frontend URL
+    origin: ['https://meet-app-delta.vercel.app',
+    'https://another-allowed-origin.com' 
+    ],  // Your frontend URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true
